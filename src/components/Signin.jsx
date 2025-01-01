@@ -16,7 +16,7 @@ const Signin = () => {
                 const lastSignInTime = user?.metadata?.lastSignInTime
                 const newUser = { email, lastSignInTime }
                 console.log(newUser)
-                fetch(`http://localhost:5000/users`, {
+                fetch(`https://coffee-store-server-lilac-seven.vercel.app/users`, {
                     method: 'PATCH',
                     headers: {
                         "content-type": "application/json"

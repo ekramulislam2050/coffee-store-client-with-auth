@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
+import { data } from 'autoprefixer';
+import axios from 'axios';
 
 const Signup = () => {
     const {createUser}=useContext(AuthContext)
@@ -14,17 +16,9 @@ const Signup = () => {
             const user = result.user;
             const newUser = {user,name}
             // console.log(user)
-            fetch(`http://localhost:5000/users`,{
-                method:'POST',
-                headers:{
-                    "content-type":"application/json"
-                },
-                body:JSON.stringify(newUser)
-            })
-            .then(res=>res.json())
-            .then(data=>{
-                console.log("sign up : ",data)
-            })
+            axios.post("https://coffee-store-server-lilac-seven.vercel.app/users",newUser)
+            .then(data=>console.log( "sign up data = ",data.data))
+            
         })
         .catch(err=>{
             console.log("error from sign up : ", err)
