@@ -16,6 +16,17 @@ import Signin from './components/Signin.jsx';
 import Signup from './components/Signup.jsx';
 import AuthProvider from './Provider/AuthProvider.jsx';
 import Users from './components/Users.jsx';
+// tanstack query import----------
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import Users2 from './components/Users2.jsx';
+// tanStack client
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
@@ -37,17 +48,21 @@ const router = createBrowserRouter([
         loader: ({ params }) => fetch(`https://coffee-store-server-lilac-seven.vercel.app/coffee/${params.id}`)
       },
       {
-        path:"signin",
-        element:<Signin></Signin>
+        path: "signin",
+        element: <Signin></Signin>
       },
       {
-        path:"signup",
-        element:<Signup></Signup>
+        path: "signup",
+        element: <Signup></Signup>
       },
       {
-        path:"users",
-        element:<Users></Users>,
-        loader:()=>fetch("https://coffee-store-server-lilac-seven.vercel.app/users")
+        path: "users",
+        element: <Users></Users>,
+        loader: () => fetch("https://coffee-store-server-lilac-seven.vercel.app/users")
+      },
+      {
+        path:"users2",
+        element:<Users2></Users2>
       }
     ]
   },
@@ -55,8 +70,13 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   <AuthProvider>
-   <RouterProvider router={router} />
-   </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
+
+
+
   </StrictMode>,
 )
